@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.actividadfinaldi.controller.PantallaPrincipalController"
+            stylesheets="@styles.css">
+
+    <top>
+        <VBox styleClass="header">
+            <Label text="Sistema de Alquiler de Coches" styleClass="title"/>
+        </VBox>
+    </top>
+
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+
+            <!-- Tab Clientes -->
+            <Tab text="Clientes">
+                <VBox spacing="15" styleClass="content-pane">
+                    <Label text="Registro de Cliente" styleClass="section-title"/>
+                    <GridPane hgap="10" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="100" prefWidth="100"/>
+                            <ColumnConstraints minWidth="200" prefWidth="200"/>
+                            <ColumnConstraints minWidth="100" prefWidth="100"/>
+                            <ColumnConstraints minWidth="200" prefWidth="200"/>
+                        </columnConstraints>
+
+                        <Label text="Nombre:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextField fx:id="txtNombre" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                        <Label text="Apellidos:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                        <TextField fx:id="txtApellidos" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                        <Label text="DNI:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <TextField fx:id="txtDni" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+
+                        <Label text="Fecha Nacimiento:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <DatePicker fx:id="dpFechaNacimiento" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                    </GridPane>
+
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Button fx:id="btnRegistrarCliente" text="Registrar Cliente"
+                                onAction="#handleRegistrarCliente" styleClass="btn-primary"/>
+                    </HBox>
+
+                    <Separator/>
+
+                    <Label text="Clientes Activos" styleClass="section-title"/>
+                    <TableView fx:id="tableClientes" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colNombreCliente" text="Nombre" prefWidth="150"/>
+                            <TableColumn fx:id="colApellidosCliente" text="Apellidos" prefWidth="150"/>
+                            <TableColumn fx:id="colDniCliente" text="DNI" prefWidth="100"/>
+                            <TableColumn fx:id="colEdadCliente" text="Edad" prefWidth="80"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- Tab Vehiculos -->
+            <Tab text="Vehiculos">
+                <VBox spacing="15" styleClass="content-pane">
+                    <Label text="Registro de Vehiculo" styleClass="section-title"/>
+                    <GridPane hgap="10" vgap="10">
+                        <columnConstraints>
+                            <ColumnConstraints minWidth="100" prefWidth="100"/>
+                            <ColumnConstraints minWidth="200" prefWidth="200"/>
+                            <ColumnConstraints minWidth="100" prefWidth="100"/>
+                            <ColumnConstraints minWidth="200" prefWidth="200"/>
+                        </columnConstraints>
+
+                        <Label text="Matricula:" GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <TextField fx:id="txtMatricula" GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+                        <Label text="Poliza Seguro:" GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                        <TextField fx:id="txtPoliza" GridPane.columnIndex="3" GridPane.rowIndex="0"/>
+
+                        <Label text="Tipo:" GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <ComboBox fx:id="cmbTipoVehiculo" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                                  prefWidth="200"/>
+
+                        <Label text="Fecha Matriculacion:" GridPane.columnIndex="2" GridPane.rowIndex="1"/>
+                        <DatePicker fx:id="dpFechaMatriculacion" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
+                    </GridPane>
+
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Button fx:id="btnRegistrarVehiculo" text="Registrar Vehiculo"
+                                onAction="#handleRegistrarVehiculo" styleClass="btn-primary"/>
+                    </HBox>
+
+                    <Separator/>
+
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Label text="Vehiculos Activos" styleClass="section-title"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Label text="Filtrar por tipo:"/>
+                        <ComboBox fx:id="cmbFiltroTipo" onAction="#handleFiltrarVehiculos" prefWidth="150"/>
+                    </HBox>
+
+                    <TableView fx:id="tableVehiculos" VBox.vgrow="ALWAYS">
+                        <columns>
+                            <TableColumn fx:id="colMatricula" text="Matricula" prefWidth="120"/>
+                            <TableColumn fx:id="colPoliza" text="Poliza" prefWidth="120"/>
+                            <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
+                            <TableColumn fx:id="colAñosUso" text="Años Uso" prefWidth="100"/>
+                        </columns>
+                    </TableView>
+                </VBox>
+            </Tab>
+
+            <!-- Tab Alquilar -->
+            <Tab text="Realizar Alquiler">
+                <VBox spacing="15" styleClass="content-pane">
+                    <Label text="Seleccionar Cliente y Vehiculo" styleClass="section-title"/>
+
+                    <HBox spacing="20" VBox.vgrow="ALWAYS">
+                        <VBox spacing="10" HBox.hgrow="ALWAYS">
+                            <Label text="Clientes:" styleClass="subsection-title"/>
+                            <TableView fx:id="tableClientes" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colNombreCliente" text="Nombre" prefWidth="120"/>
+                                    <TableColumn fx:id="colApellidosCliente" text="Apellidos" prefWidth="120"/>
+                                    <TableColumn fx:id="colDniCliente" text="DNI" prefWidth="90"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <VBox spacing="10" HBox.hgrow="ALWAYS">
+                            <Label text="Vehiculos:" styleClass="subsection-title"/>
+                            <TableView fx:id="tableVehiculos" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn fx:id="colMatricula" text="Matricula" prefWidth="120"/>
+                                    <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
+                                    <TableColumn fx:id="colAñosUso" text="Años" prefWidth="70"/>
+                                </columns>
+                            </TableView>
+                        </VBox>
+                    </HBox>
+
+                    <Separator/>
+
+                    <Label text="Periodo de Alquiler" styleClass="section-title"/>
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <Label text="Fecha Inicio:"/>
+                        <DatePicker fx:id="dpFechaInicio" prefWidth="150"/>
+                        <Label text="Fecha Fin:"/>
+                        <DatePicker fx:id="dpFechaFin" prefWidth="150"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Button fx:id="btnAlquilar" text="Alquilar Vehiculo"
+                                onAction="#handleAlquilar" styleClass="btn-success" disable="true"/>
+                    </HBox>
+
+                    <Separator/>
+
+                    <Label text="Alquileres Activos" styleClass="section-title"/>
+                    <TextArea fx:id="txtAreaAlquileres" editable="false" VBox.vgrow="ALWAYS"/>
+                </VBox>
+            </Tab>
+
+        </TabPane>
+    </center>
+
+    <padding>
+        <Insets top="10" right="10" bottom="10" left="10"/>
+    </padding>
+</BorderPane>
