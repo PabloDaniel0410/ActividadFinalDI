@@ -11,8 +11,8 @@ public class DatabaseConnection {
 
     // Configuracion Supabase - CAMBIAR por tus credenciales
     private static final String URL = "jdbc:postgresql://db.xxxxxxxxxxxx.supabase.co:5432/postgres";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "tu_password";
+    private static final String USER = "PabloDaniel0410";
+    private static final String PASSWORD = "PabloConra12!";
 
     private static Connection connection;
 
