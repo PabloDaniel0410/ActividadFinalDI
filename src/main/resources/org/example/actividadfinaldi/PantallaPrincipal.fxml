@@ -50,12 +50,12 @@
                     <Separator/>
 
                     <Label text="Clientes Activos" styleClass="section-title"/>
-                    <TableView fx:id="tableClientes" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tableClientesTab" VBox.vgrow="ALWAYS">
                         <columns>
-                            <TableColumn fx:id="colNombreCliente" text="Nombre" prefWidth="150"/>
-                            <TableColumn fx:id="colApellidosCliente" text="Apellidos" prefWidth="150"/>
-                            <TableColumn fx:id="colDniCliente" text="DNI" prefWidth="100"/>
-                            <TableColumn fx:id="colEdadCliente" text="Edad" prefWidth="80"/>
+                            <TableColumn fx:id="colNombreClienteTab" text="Nombre" prefWidth="150"/>
+                            <TableColumn fx:id="colApellidosClienteTab" text="Apellidos" prefWidth="200"/>
+                            <TableColumn fx:id="colDniClienteTab" text="DNI" prefWidth="120"/>
+                            <TableColumn fx:id="colEdadClienteTab" text="Edad" prefWidth="80"/>
                         </columns>
                     </TableView>
                 </VBox>
@@ -101,12 +101,12 @@
                         <ComboBox fx:id="cmbFiltroTipo" onAction="#handleFiltrarVehiculos" prefWidth="150"/>
                     </HBox>
 
-                    <TableView fx:id="tableVehiculos" VBox.vgrow="ALWAYS">
+                    <TableView fx:id="tableVehiculosTab" VBox.vgrow="ALWAYS">
                         <columns>
-                            <TableColumn fx:id="colMatricula" text="Matricula" prefWidth="120"/>
-                            <TableColumn fx:id="colPoliza" text="Poliza" prefWidth="120"/>
-                            <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
-                            <TableColumn fx:id="colAñosUso" text="Años Uso" prefWidth="100"/>
+                            <TableColumn fx:id="colMatriculaTab" text="Matricula" prefWidth="150"/>
+                            <TableColumn fx:id="colPolizaTab" text="Poliza" prefWidth="150"/>
+                            <TableColumn fx:id="colTipoTab" text="Tipo" prefWidth="120"/>
+                            <TableColumn fx:id="colAñosUsoTab" text="Años Uso" prefWidth="100"/>
                         </columns>
                     </TableView>
                 </VBox>
@@ -123,8 +123,9 @@
                             <TableView fx:id="tableClientes" VBox.vgrow="ALWAYS">
                                 <columns>
                                     <TableColumn fx:id="colNombreCliente" text="Nombre" prefWidth="120"/>
-                                    <TableColumn fx:id="colApellidosCliente" text="Apellidos" prefWidth="120"/>
-                                    <TableColumn fx:id="colDniCliente" text="DNI" prefWidth="90"/>
+                                    <TableColumn fx:id="colApellidosCliente" text="Apellidos" prefWidth="150"/>
+                                    <TableColumn fx:id="colDniCliente" text="DNI" prefWidth="100"/>
+                                    <TableColumn fx:id="colEdadCliente" text="Edad" prefWidth="60"/>
                                 </columns>
                             </TableView>
                         </VBox>
@@ -134,6 +135,7 @@
                             <TableView fx:id="tableVehiculos" VBox.vgrow="ALWAYS">
                                 <columns>
                                     <TableColumn fx:id="colMatricula" text="Matricula" prefWidth="120"/>
+                                    <TableColumn fx:id="colPoliza" text="Poliza" prefWidth="120"/>
                                     <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
                                     <TableColumn fx:id="colAñosUso" text="Años" prefWidth="70"/>
                                 </columns>

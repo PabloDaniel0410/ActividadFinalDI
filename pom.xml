@@ -28,11 +28,11 @@
             <version>17.0.2</version>
         </dependency>
 
-        <!-- PostgreSQL Driver para Supabase -->
+        <!-- JSON Library para trabajar con Supabase REST API -->
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.6.0</version>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20231013</version>
         </dependency>
 
         <!-- JUnit 5 para tests -->

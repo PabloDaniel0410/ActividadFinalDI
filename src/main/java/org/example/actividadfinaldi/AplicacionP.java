@@ -7,7 +7,7 @@ import javafx.stage.Stage;
 import org.example.actividadfinaldi.util.DatabaseConnection;
 
 import java.io.IOException;
-import java.sql.SQLException;
+
 
 /**
  * Aplicacion principal de alquiler de coches
@@ -18,7 +18,7 @@ public class AplicacionP extends Application {
     public void start(Stage stage) throws IOException {
         try {
             DatabaseConnection.inicializarTablas();
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.err.println("Error inicializando BD: " + e.getMessage());
         }
 

@@ -1,59 +1,126 @@
 package org.example.actividadfinaldi.util;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 
 /**
- * Gestiona la conexion con Supabase PostgreSQL
+ * Gestiona la conexión con Supabase mediante API REST
  */
 public class DatabaseConnection {
 
-    // Configuracion Supabase - CAMBIAR por tus credenciales
-    private static final String URL = "jdbc:postgresql://db.xxxxxxxxxxxx.supabase.co:5432/postgres";
-    private static final String USER = "PabloDaniel0410";
-    private static final String PASSWORD = "PabloConra12!";
+    private static final HttpClient client = HttpClient.newHttpClient();
 
-    private static Connection connection;
+    // IMPORTANTE: Cambia esta URL por la de tu proyecto Supabase
+    private static final String BASE_URL = "https://abwizvhfubnachixobdj.supabase.co/rest/v1";
+
+    // IMPORTANTE: Obtén tu anon key desde Project Settings > API > anon public
+    private static final String ANON_KEY = "sb_publishable_F5GEPGmK7xgf3PmrV6z5gQ_RieoQA7y";
 
     /**
-     * Obtiene la conexion a la base de datos
-     * @return conexion activa
-     * @throws SQLException si falla la conexion
+     * Crea un constructor base de peticiones HTTP con los headers necesarios
      */
-    public static Connection getConnection() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            try {
-                Class.forName("org.postgresql.Driver");
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            } catch (ClassNotFoundException e) {
-                throw new SQLException("Driver PostgreSQL no encontrado", e);
-            }
-        }
-        return connection;
+    private static HttpRequest.Builder baseRequest(String url) {
+        return HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("apikey", ANON_KEY)
+                .header("Authorization", "Bearer " + ANON_KEY)
+                .header("Content-Type", "application/json")
+                .header("Prefer", "return=representation");
     }
 
     /**
-     * Cierra la conexion activa
+     * Realiza una petición GET a Supabase
      */
-    public static void closeConnection() {
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+    public static JSONArray get(String tabla, String filtro) throws Exception {
+        String url = BASE_URL + "/" + tabla;
+        if (filtro != null && !filtro.isEmpty()) {
+            url += "?" + filtro;
         }
+
+        HttpRequest request = baseRequest(url).GET().build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            return new JSONArray(response.body());
+        }
+        throw new Exception("Error en GET: " + response.statusCode());
+    }
+
+    /**
+     * Realiza una petición POST a Supabase
+     */
+    public static JSONObject post(String tabla, JSONObject datos) throws Exception {
+        String url = BASE_URL + "/" + tabla;
+
+        HttpRequest request = baseRequest(url)
+                .POST(HttpRequest.BodyPublishers.ofString(datos.toString()))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 201) {
+            JSONArray arr = new JSONArray(response.body());
+            return arr.length() > 0 ? arr.getJSONObject(0) : null;
+        }
+        throw new Exception("Error en POST: " + response.statusCode() + " - " + response.body());
+    }
+
+    /**
+     * Realiza una petición PATCH a Supabase
+     */
+    public static JSONObject patch(String tabla, String filtro, JSONObject datos) throws Exception {
+        String url = BASE_URL + "/" + tabla + "?" + filtro;
+
+        HttpRequest request = baseRequest(url)
+                .method("PATCH", HttpRequest.BodyPublishers.ofString(datos.toString()))
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            JSONArray arr = new JSONArray(response.body());
+            return arr.length() > 0 ? arr.getJSONObject(0) : null;
+        }
+        throw new Exception("Error en PATCH: " + response.statusCode());
+    }
+
+    /**
+     * Realiza una petición DELETE a Supabase
+     */
+    public static boolean delete(String tabla, String filtro) throws Exception {
+        String url = BASE_URL + "/" + tabla + "?" + filtro;
+
+        HttpRequest request = baseRequest(url)
+                .DELETE()
+                .build();
+
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        return response.statusCode() == 204 || response.statusCode() == 200;
+    }
+
+    /**
+     * Codifica un valor para usarlo en URLs
+     */
+    public static String encode(String value) {
+        return URLEncoder.encode(value, StandardCharsets.UTF_8);
     }
 
     /**
      * Inicializa las tablas en la base de datos
-     * @throws SQLException si falla la creacion
+     * NOTA: Con Supabase REST API, las tablas deben crearse desde el panel web
      */
-    public static void inicializarTablas() throws SQLException {
-        Connection conn = getConnection();
-
-        String createClientes = """
+    public static void inicializarTablas() {
+        System.out.println("IMPORTANTE: Las tablas deben crearse desde el panel de Supabase");
+        System.out.println("SQL necesario:");
+        System.out.println("""
             CREATE TABLE IF NOT EXISTS clientes (
                 id SERIAL PRIMARY KEY,
                 nombre VARCHAR(100) NOT NULL,
@@ -62,9 +129,7 @@ public class DatabaseConnection {
                 fecha_nacimiento DATE NOT NULL,
                 activo BOOLEAN DEFAULT true
             );
-        """;
-
-        String createVehiculos = """
+            
             CREATE TABLE IF NOT EXISTS vehiculos (
                 id SERIAL PRIMARY KEY,
                 matricula VARCHAR(20) UNIQUE NOT NULL,
@@ -73,9 +138,7 @@ public class DatabaseConnection {
                 fecha_matriculacion DATE NOT NULL,
                 activo BOOLEAN DEFAULT true
             );
-        """;
-
-        String createAlquileres = """
+            
             CREATE TABLE IF NOT EXISTS alquileres (
                 id SERIAL PRIMARY KEY,
                 cliente_id INTEGER REFERENCES clientes(id),
@@ -84,10 +147,13 @@ public class DatabaseConnection {
                 fecha_fin DATE NOT NULL,
                 activo BOOLEAN DEFAULT true
             );
-        """;
+        """);
+    }
 
-        conn.createStatement().execute(createClientes);
-        conn.createStatement().execute(createVehiculos);
-        conn.createStatement().execute(createAlquileres);
+    /**
+     * Método de compatibilidad (no hace nada con REST API)
+     */
+    public static void closeConnection() {
+        // No es necesario cerrar conexiones con REST API
     }
 }

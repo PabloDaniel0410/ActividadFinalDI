@@ -1,7 +1,8 @@
 module org.example.actividadfinaldi {
     requires javafx.controls;
     requires javafx.fxml;
-    requires java.sql;
+    requires java.net.http;
+    requires org.json;
 
     opens org.example.actividadfinaldi to javafx.fxml;
     opens org.example.actividadfinaldi.controller to javafx.fxml;
