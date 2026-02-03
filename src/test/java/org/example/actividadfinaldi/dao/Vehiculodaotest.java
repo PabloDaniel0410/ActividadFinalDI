@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,9 +30,12 @@ class Vehiculodaotest {
     @Order(1)
     @DisplayName("Insertar vehículo válido")
     void testInsertarVehiculoValido() {
+        // Generar matrícula única para evitar duplicados
+        String matriculaUnica = "VEH" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+
         Vehiculo vehiculo = new Vehiculo(
-                "TEST1234",
-                "POL-TEST-001",
+                matriculaUnica,
+                "POL-TEST-" + System.currentTimeMillis(),
                 TipoVehiculo.MEDIANO,
                 LocalDate.of(2020, 6, 15)
         );
@@ -42,6 +46,8 @@ class Vehiculodaotest {
             assertNotNull(vehiculo.getId(), "El ID debería asignarse después de insertar");
             assertTrue(vehiculo.getId() > 0, "El ID debería ser positivo");
             vehiculoPrueba = vehiculo;
+        } else {
+            System.out.println("No se pudo insertar vehículo (posiblemente duplicado)");
         }
     }
 
@@ -74,6 +80,14 @@ class Vehiculodaotest {
         Vehiculo resultado = vehiculoDAO.buscarPorMatricula("");
 
         assertNull(resultado, "Debería retornar null para matrícula vacía");
+    }
+
+    @Test
+    @DisplayName("Buscar vehículo con matrícula null")
+    void testBuscarPorMatriculaNull() {
+        Vehiculo resultado = vehiculoDAO.buscarPorMatricula(null);
+
+        assertNull(resultado, "Debería retornar null para matrícula null");
     }
 
     @Test
@@ -125,11 +139,20 @@ class Vehiculodaotest {
     }
 
     @Test
+    @DisplayName("Obtener vehículos por tipo null retorna lista vacía")
+    void testObtenerPorTipoNull() {
+        List<Vehiculo> vehiculos = vehiculoDAO.obtenerPorTipo(null);
+
+        assertNotNull(vehiculos, "La lista no debería ser null");
+        assertTrue(vehiculos.isEmpty(), "Debería retornar lista vacía para tipo null");
+    }
+
+    @Test
     @Order(3)
     @DisplayName("Actualizar vehículo existente")
     void testActualizarVehiculoExistente() {
         if (vehiculoPrueba != null && vehiculoPrueba.getId() != null) {
-            String nuevaPoliza = "POL-ACTUALIZADA-999";
+            String nuevaPoliza = "POL-ACTUALIZADA-" + System.currentTimeMillis();
             vehiculoPrueba.setPolizaSeguro(nuevaPoliza);
 
             boolean resultado = vehiculoDAO.actualizar(vehiculoPrueba);
@@ -144,7 +167,7 @@ class Vehiculodaotest {
     }
 
     @Test
-    @DisplayName("Actualizar vehículo sin ID")
+    @DisplayName("Actualizar vehículo sin ID retorna false")
     void testActualizarVehiculoSinId() {
         Vehiculo vehiculoSinId = new Vehiculo(
                 "TEST999",
@@ -159,13 +182,13 @@ class Vehiculodaotest {
     }
 
     @Test
-    @DisplayName("Insertar vehículo con datos nulos")
+    @DisplayName("Insertar vehículo con datos nulos retorna false")
     void testInsertarVehiculoDatosNulos() {
         Vehiculo vehiculoNulo = new Vehiculo();
 
-        assertDoesNotThrow(() -> {
-            vehiculoDAO.insertar(vehiculoNulo);
-        }, "No debería lanzar excepción, aunque probablemente falle la inserción");
+        boolean resultado = vehiculoDAO.insertar(vehiculoNulo);
+
+        assertFalse(resultado, "No debería insertar vehículo con datos nulos");
     }
 
     @Test
@@ -188,8 +211,10 @@ class Vehiculodaotest {
     @Test
     @DisplayName("Vehículo insertado tiene todos los campos")
     void testVehiculoInsertadoCamposCompletos() {
+        String matriculaUnica = "TST" + UUID.randomUUID().toString().substring(0, 6).toUpperCase();
+
         Vehiculo vehiculo = new Vehiculo(
-                "TEST5678",
+                matriculaUnica,
                 "POL-TEST-002",
                 TipoVehiculo.GRANDE,
                 LocalDate.of(2019, 3, 10)
@@ -215,14 +240,17 @@ class Vehiculodaotest {
     @DisplayName("Insertar todos los tipos de vehículo")
     void testInsertarTodosTipos() {
         for (TipoVehiculo tipo : TipoVehiculo.values()) {
+            String matriculaUnica = tipo.name().substring(0, 3) +
+                    UUID.randomUUID().toString().substring(0, 5).toUpperCase();
+
             Vehiculo vehiculo = new Vehiculo(
-                    "TEST" + tipo.name(),
+                    matriculaUnica,
                     "POL-" + tipo.name(),
                     tipo,
                     LocalDate.now().minusYears(3)
             );
 
-            // Intentar insertar (puede fallar si ya existe)
+            // Intentar insertar (puede fallar si ya existe, pero no debería lanzar excepción)
             assertDoesNotThrow(() -> vehiculoDAO.insertar(vehiculo));
         }
     }
@@ -279,6 +307,20 @@ class Vehiculodaotest {
                     assertEquals(nuevoTipo, actualizado.getTipo());
                 }
             }
+        }
+    }
+
+    @Test
+    @DisplayName("Actualizar vehículo con datos null retorna false")
+    void testActualizarVehiculoDatosNull() {
+        if (vehiculoPrueba != null) {
+            Vehiculo vehiculoConNulls = new Vehiculo();
+            vehiculoConNulls.setId(vehiculoPrueba.getId());
+            // Dejar otros campos como null
+
+            boolean resultado = vehiculoDAO.actualizar(vehiculoConNulls);
+
+            assertFalse(resultado, "No debería actualizar vehículo con datos null");
         }
     }
 

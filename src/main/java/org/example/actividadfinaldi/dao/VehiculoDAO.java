@@ -22,6 +22,13 @@ public class VehiculoDAO {
      */
     public boolean insertar(Vehiculo vehiculo) {
         try {
+            // Validación de datos antes de insertar
+            if (vehiculo == null || vehiculo.getMatricula() == null ||
+                    vehiculo.getPolizaSeguro() == null || vehiculo.getTipo() == null ||
+                    vehiculo.getFechaMatriculacion() == null) {
+                return false;
+            }
+
             JSONObject datos = new JSONObject();
             datos.put("matricula", vehiculo.getMatricula());
             datos.put("poliza_seguro", vehiculo.getPolizaSeguro());
@@ -36,7 +43,7 @@ public class VehiculoDAO {
                 return true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al insertar vehículo: " + e.getMessage());
         }
         return false;
     }
@@ -48,6 +55,10 @@ public class VehiculoDAO {
      */
     public Vehiculo buscarPorMatricula(String matricula) {
         try {
+            if (matricula == null || matricula.isEmpty()) {
+                return null;
+            }
+
             String filtro = "matricula=eq." + DatabaseConnection.encode(matricula);
             JSONArray resultados = DatabaseConnection.get("vehiculos", filtro);
 
@@ -55,7 +66,7 @@ public class VehiculoDAO {
                 return mapearVehiculo(resultados.getJSONObject(0));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al buscar vehículo: " + e.getMessage());
         }
         return null;
     }
@@ -74,7 +85,7 @@ public class VehiculoDAO {
                 vehiculos.add(mapearVehiculo(resultados.getJSONObject(i)));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al obtener vehículos: " + e.getMessage());
         }
         return vehiculos;
     }
@@ -87,6 +98,10 @@ public class VehiculoDAO {
     public List<Vehiculo> obtenerPorTipo(TipoVehiculo tipo) {
         List<Vehiculo> vehiculos = new ArrayList<>();
         try {
+            if (tipo == null) {
+                return vehiculos;
+            }
+
             String filtro = "activo=eq.true&tipo=eq." + tipo.name() + "&order=matricula.asc";
             JSONArray resultados = DatabaseConnection.get("vehiculos", filtro);
 
@@ -94,7 +109,7 @@ public class VehiculoDAO {
                 vehiculos.add(mapearVehiculo(resultados.getJSONObject(i)));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al obtener vehículos por tipo: " + e.getMessage());
         }
         return vehiculos;
     }
@@ -106,6 +121,17 @@ public class VehiculoDAO {
      */
     public boolean actualizar(Vehiculo vehiculo) {
         try {
+            // Validación: el vehículo debe tener ID
+            if (vehiculo == null || vehiculo.getId() == null) {
+                return false;
+            }
+
+            // Validación de datos
+            if (vehiculo.getPolizaSeguro() == null || vehiculo.getTipo() == null ||
+                    vehiculo.getFechaMatriculacion() == null) {
+                return false;
+            }
+
             JSONObject datos = new JSONObject();
             datos.put("poliza_seguro", vehiculo.getPolizaSeguro());
             datos.put("tipo", vehiculo.getTipo().name());
@@ -117,7 +143,7 @@ public class VehiculoDAO {
 
             return resultado != null;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al actualizar vehículo: " + e.getMessage());
         }
         return false;
     }

@@ -1,1 +1,24 @@
 2026-02-02 09:26:04 | Cliente: Pablo PAblo (DNI: 87546312A) | Vehiculo: 9012GHI | Inicio: 2026-01-26 | Fin: 2026-02-10 | Dias: 15
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2024-01-15 | Fin: 2024-01-22 | Dias: 7
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-02-08 | Dias: 5
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2024-02-01 | Fin: 2024-02-08 | Dias: 7
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-02-04 | Dias: 1
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-02-06 | Dias: 3
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-02-10 | Dias: 7
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-02-17 | Dias: 14
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-03-05 | Dias: 30
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-04-04 | Dias: 60
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2024-04-01 | Fin: 2024-04-08 | Dias: 7
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: TESTPEQUEÑO | Inicio: 2026-02-03 | Fin: 2026-02-08 | Dias: 5
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: TESTMEDIANO | Inicio: 2026-02-03 | Fin: 2026-02-08 | Dias: 5
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: TESTGRANDE | Inicio: 2026-02-03 | Fin: 2026-02-08 | Dias: 5
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-02-06 | Dias: 3
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-02-08 | Dias: 5
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-13 | Fin: 2026-02-18 | Dias: 5
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-02-10 | Dias: 7
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-04 | Fin: 2026-02-11 | Dias: 7
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-05 | Fin: 2026-02-12 | Dias: 7
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-06 | Fin: 2026-02-13 | Dias: 7
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-07 | Fin: 2026-02-14 | Dias: 7
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2024-03-01 | Fin: 2024-03-11 | Dias: 10
+2026-02-03 22:11:36 | Cliente: María González López (DNI: 12345678A) | Vehiculo: 1234ABC | Inicio: 2026-02-03 | Fin: 2026-02-10 | Dias: 7

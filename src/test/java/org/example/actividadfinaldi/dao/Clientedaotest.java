@@ -5,13 +5,13 @@ import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests de integración para ClienteDAO
  * Estos tests requieren una conexión activa a Supabase
- * Se recomienda usar una base de datos de pruebas
  */
 @DisplayName("Tests de ClienteDAO")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -29,21 +29,24 @@ class Clientedaotest {
     @Order(1)
     @DisplayName("Insertar cliente válido")
     void testInsertarClienteValido() {
+        // Generar DNI único para evitar duplicados
+        String dniUnico = "CLI" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+
         Cliente cliente = new Cliente(
                 "María Test",
                 "García López",
-                "TEST12345X",
+                dniUnico,
                 LocalDate.of(1990, 5, 15)
         );
 
         boolean resultado = clienteDAO.insertar(cliente);
 
-        // Nota: Este test fallará si no hay conexión a Supabase
-        // o si ya existe un cliente con ese DNI
         if (resultado) {
             assertNotNull(cliente.getId(), "El ID debería asignarse después de insertar");
             assertTrue(cliente.getId() > 0, "El ID debería ser positivo");
             clientePrueba = cliente;
+        } else {
+            System.out.println("No se pudo insertar cliente (posiblemente duplicado)");
         }
     }
 
@@ -51,7 +54,6 @@ class Clientedaotest {
     @Order(2)
     @DisplayName("Buscar cliente por DNI existente")
     void testBuscarPorDniExistente() {
-        // Este test depende de que el test anterior haya insertado un cliente
         if (clientePrueba != null) {
             Cliente encontrado = clienteDAO.buscarPorDni(clientePrueba.getDni());
 
@@ -80,12 +82,19 @@ class Clientedaotest {
     }
 
     @Test
+    @DisplayName("Buscar cliente con DNI null")
+    void testBuscarPorDniNull() {
+        Cliente resultado = clienteDAO.buscarPorDni(null);
+
+        assertNull(resultado, "Debería retornar null para DNI null");
+    }
+
+    @Test
     @DisplayName("Obtener clientes activos")
     void testObtenerActivos() {
         List<Cliente> clientes = clienteDAO.obtenerActivos();
 
         assertNotNull(clientes, "La lista no debería ser null");
-        // La lista puede estar vacía si no hay clientes en la BD
         for (Cliente cliente : clientes) {
             assertTrue(cliente.isActivo(), "Todos los clientes deberían estar activos");
         }
@@ -111,7 +120,7 @@ class Clientedaotest {
     }
 
     @Test
-    @DisplayName("Actualizar cliente sin ID")
+    @DisplayName("Actualizar cliente sin ID retorna false")
     void testActualizarClienteSinId() {
         Cliente clienteSinId = new Cliente(
                 "Test",
@@ -119,24 +128,20 @@ class Clientedaotest {
                 "TEST999",
                 LocalDate.now().minusYears(30)
         );
-        // No se asigna ID
 
         boolean resultado = clienteDAO.actualizar(clienteSinId);
 
-        // El comportamiento puede variar, pero generalmente debería fallar
         assertFalse(resultado, "No debería actualizar un cliente sin ID");
     }
 
     @Test
-    @DisplayName("Insertar cliente con datos nulos")
+    @DisplayName("Insertar cliente con datos nulos retorna false")
     void testInsertarClienteDatosNulos() {
         Cliente clienteNulo = new Cliente();
-        // No se establecen datos
 
-        // Este test verifica que el DAO maneje correctamente datos incompletos
-        assertDoesNotThrow(() -> {
-            clienteDAO.insertar(clienteNulo);
-        }, "No debería lanzar excepción, aunque probablemente falle la inserción");
+        boolean resultado = clienteDAO.insertar(clienteNulo);
+
+        assertFalse(resultado, "No debería insertar un cliente con datos nulos");
     }
 
     @Test
@@ -159,10 +164,12 @@ class Clientedaotest {
     @Test
     @DisplayName("Cliente insertado tiene todos los campos")
     void testClienteInsertadoCamposCompletos() {
+        String dniUnico = "TEST" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+
         Cliente cliente = new Cliente(
                 "Pedro",
                 "Martínez Sánchez",
-                "TEST67890Y",
+                dniUnico,
                 LocalDate.of(1985, 8, 20)
         );
 
@@ -189,7 +196,6 @@ class Clientedaotest {
 
         for (Cliente cliente : clientes) {
             if (cliente.getFechaNacimiento() != null) {
-                // Todos los clientes en la BD deberían ser mayores de 25
                 assertTrue(
                         cliente.getEdad() >= 0,
                         "La edad debería ser un valor válido"
@@ -198,9 +204,22 @@ class Clientedaotest {
         }
     }
 
+    @Test
+    @DisplayName("Actualizar cliente con datos null retorna false")
+    void testActualizarClienteDatosNull() {
+        if (clientePrueba != null) {
+            Cliente clienteConNulls = new Cliente();
+            clienteConNulls.setId(clientePrueba.getId());
+            // Dejar otros campos como null
+
+            boolean resultado = clienteDAO.actualizar(clienteConNulls);
+
+            assertFalse(resultado, "No debería actualizar cliente con datos null");
+        }
+    }
+
     @AfterAll
     static void tearDown() {
-        // Aquí podrías limpiar los datos de prueba si lo necesitas
         System.out.println("Tests de ClienteDAO completados");
     }
 }

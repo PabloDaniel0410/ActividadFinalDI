@@ -21,6 +21,13 @@ public class ClienteDAO {
      */
     public boolean insertar(Cliente cliente) {
         try {
+            // Validación de datos antes de insertar
+            if (cliente == null || cliente.getNombre() == null ||
+                    cliente.getApellidos() == null || cliente.getDni() == null ||
+                    cliente.getFechaNacimiento() == null) {
+                return false;
+            }
+
             JSONObject datos = new JSONObject();
             datos.put("nombre", cliente.getNombre());
             datos.put("apellidos", cliente.getApellidos());
@@ -35,7 +42,7 @@ public class ClienteDAO {
                 return true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al insertar cliente: " + e.getMessage());
         }
         return false;
     }
@@ -47,6 +54,10 @@ public class ClienteDAO {
      */
     public Cliente buscarPorDni(String dni) {
         try {
+            if (dni == null || dni.isEmpty()) {
+                return null;
+            }
+
             String filtro = "dni=eq." + DatabaseConnection.encode(dni);
             JSONArray resultados = DatabaseConnection.get("clientes", filtro);
 
@@ -54,7 +65,7 @@ public class ClienteDAO {
                 return mapearCliente(resultados.getJSONObject(0));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al buscar cliente: " + e.getMessage());
         }
         return null;
     }
@@ -73,7 +84,7 @@ public class ClienteDAO {
                 clientes.add(mapearCliente(resultados.getJSONObject(i)));
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al obtener clientes: " + e.getMessage());
         }
         return clientes;
     }
@@ -85,6 +96,17 @@ public class ClienteDAO {
      */
     public boolean actualizar(Cliente cliente) {
         try {
+            // Validación: el cliente debe tener ID
+            if (cliente == null || cliente.getId() == null) {
+                return false;
+            }
+
+            // Validación de datos
+            if (cliente.getNombre() == null || cliente.getApellidos() == null ||
+                    cliente.getFechaNacimiento() == null) {
+                return false;
+            }
+
             JSONObject datos = new JSONObject();
             datos.put("nombre", cliente.getNombre());
             datos.put("apellidos", cliente.getApellidos());
@@ -96,7 +118,7 @@ public class ClienteDAO {
 
             return resultado != null;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al actualizar cliente: " + e.getMessage());
         }
         return false;
     }

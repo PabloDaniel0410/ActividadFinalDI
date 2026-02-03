@@ -26,6 +26,19 @@ public class AlquilerDAO {
      */
     public boolean insertar(Alquiler alquiler) {
         try {
+            // Validación de datos antes de insertar
+            if (alquiler == null || alquiler.getCliente() == null ||
+                    alquiler.getVehiculo() == null || alquiler.getFechaInicio() == null ||
+                    alquiler.getFechaFin() == null) {
+                return false;
+            }
+
+            // Validación de IDs
+            if (alquiler.getCliente().getId() == null ||
+                    alquiler.getVehiculo().getId() == null) {
+                return false;
+            }
+
             JSONObject datos = new JSONObject();
             datos.put("cliente_id", alquiler.getCliente().getId());
             datos.put("vehiculo_id", alquiler.getVehiculo().getId());
@@ -40,7 +53,7 @@ public class AlquilerDAO {
                 return true;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al insertar alquiler: " + e.getMessage());
         }
         return false;
     }
@@ -62,7 +75,7 @@ public class AlquilerDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al obtener alquileres: " + e.getMessage());
         }
         return alquileres;
     }
@@ -85,7 +98,7 @@ public class AlquilerDAO {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al obtener alquileres por cliente: " + e.getMessage());
         }
         return alquileres;
     }
@@ -103,7 +116,7 @@ public class AlquilerDAO {
             int clienteId = json.getInt("cliente_id");
             int vehiculoId = json.getInt("vehiculo_id");
 
-            // Obtiene el  cliente y vehículo
+            // Obtiene el cliente y vehículo
             Cliente cliente = obtenerClientePorId(clienteId);
             Vehiculo vehiculo = obtenerVehiculoPorId(vehiculoId);
 
@@ -119,7 +132,7 @@ public class AlquilerDAO {
 
             return alquiler;
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al mapear alquiler: " + e.getMessage());
             return null;
         }
     }
@@ -144,7 +157,7 @@ public class AlquilerDAO {
                 return cliente;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al obtener cliente por ID: " + e.getMessage());
         }
         return null;
     }
@@ -169,7 +182,7 @@ public class AlquilerDAO {
                 return vehiculo;
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.err.println("Error al obtener vehículo por ID: " + e.getMessage());
         }
         return null;
     }
