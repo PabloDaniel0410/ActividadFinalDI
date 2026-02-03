@@ -106,7 +106,7 @@
                             <TableColumn fx:id="colMatriculaTab" text="Matricula" prefWidth="150"/>
                             <TableColumn fx:id="colPolizaTab" text="Poliza" prefWidth="150"/>
                             <TableColumn fx:id="colTipoTab" text="Tipo" prefWidth="120"/>
-                            <TableColumn fx:id="colAñosUsoTab" text="Años Uso" prefWidth="100"/>
+                            <TableColumn fx:id="colAniosUsoTab" text="Años Uso" prefWidth="100"/>
                         </columns>
                     </TableView>
                 </VBox>
@@ -137,7 +137,7 @@
                                     <TableColumn fx:id="colMatricula" text="Matricula" prefWidth="120"/>
                                     <TableColumn fx:id="colPoliza" text="Poliza" prefWidth="120"/>
                                     <TableColumn fx:id="colTipo" text="Tipo" prefWidth="100"/>
-                                    <TableColumn fx:id="colAñosUso" text="Años" prefWidth="70"/>
+                                    <TableColumn fx:id="colAniosUso" text="Años" prefWidth="70"/>
                                 </columns>
                             </TableView>
                         </VBox>

@@ -43,7 +43,7 @@ public class PantallaPrincipalController {
     @FXML private TableColumn<Vehiculo, String> colMatriculaTab;
     @FXML private TableColumn<Vehiculo, String> colPolizaTab;
     @FXML private TableColumn<Vehiculo, TipoVehiculo> colTipoTab;
-    @FXML private TableColumn<Vehiculo, Integer> colAñosUsoTab;
+    @FXML private TableColumn<Vehiculo, Integer> colAniosUsoTab;
 
     @FXML private TableView<Cliente> tableClientes;
     @FXML private TableColumn<Cliente, String> colNombreCliente;
@@ -55,7 +55,7 @@ public class PantallaPrincipalController {
     @FXML private TableColumn<Vehiculo, String> colMatricula;
     @FXML private TableColumn<Vehiculo, String> colPoliza;
     @FXML private TableColumn<Vehiculo, TipoVehiculo> colTipo;
-    @FXML private TableColumn<Vehiculo, Integer> colAñosUso;
+    @FXML private TableColumn<Vehiculo, Integer> colAniosUso;
 
     @FXML private ComboBox<TipoVehiculo> cmbFiltroTipo;
     @FXML private DatePicker dpFechaInicio;
@@ -101,8 +101,8 @@ public class PantallaPrincipalController {
         colMatriculaTab.setCellValueFactory(new PropertyValueFactory<>("matricula"));
         colPolizaTab.setCellValueFactory(new PropertyValueFactory<>("polizaSeguro"));
         colTipoTab.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        colAñosUsoTab.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getAñosUso()).asObject());
+        colAniosUsoTab.setCellValueFactory(cellData ->
+                new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getAniosUso()).asObject());
 
         tableVehiculosTab.setItems(vehiculosDataTab);
     }
@@ -121,8 +121,8 @@ public class PantallaPrincipalController {
         colMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
         colPoliza.setCellValueFactory(new PropertyValueFactory<>("polizaSeguro"));
         colTipo.setCellValueFactory(new PropertyValueFactory<>("tipo"));
-        colAñosUso.setCellValueFactory(cellData ->
-                new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getAñosUso()).asObject());
+        colAniosUso.setCellValueFactory(cellData ->
+                new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getAniosUso()).asObject());
 
         tableVehiculos.setItems(vehiculosData);
     }

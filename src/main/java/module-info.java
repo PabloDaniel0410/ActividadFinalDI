@@ -8,7 +8,6 @@ module org.example.actividadfinaldi {
     opens org.example.actividadfinaldi.controller to javafx.fxml;
     opens org.example.actividadfinaldi.model to javafx.base;
 
-
     opens org.example.actividadfinaldi.dao;
     opens org.example.actividadfinaldi.service;
     opens org.example.actividadfinaldi.util;

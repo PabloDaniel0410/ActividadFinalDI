@@ -89,27 +89,27 @@ class VehiculoTest {
 
     @Test
     @DisplayName("Calcular años de uso correctamente")
-    void testGetAñosUso() {
+    void testGetAniosUso() {
         LocalDate hace5Anios = LocalDate.now().minusYears(5);
         vehiculo.setFechaMatriculacion(hace5Anios);
 
-        assertEquals(5, vehiculo.getAñosUso(), "Los años de uso deberían ser 5");
+        assertEquals(5, vehiculo.getAniosUso(), "Los años de uso deberían ser 5");
     }
 
     @Test
     @DisplayName("Años de uso es 0 para vehículo nuevo")
-    void testGetAñosUsoVehiculoNuevo() {
+    void testGetAniosUsoVehiculoNuevo() {
         vehiculo.setFechaMatriculacion(LocalDate.now());
 
-        assertEquals(0, vehiculo.getAñosUso(), "Los años de uso deberían ser 0 para vehículo nuevo");
+        assertEquals(0, vehiculo.getAniosUso(), "Los años de uso deberían ser 0 para vehículo nuevo");
     }
 
     @Test
     @DisplayName("Años de uso es 0 cuando no hay fecha")
-    void testGetAñosUsoSinFecha() {
+    void testGetAniosUsoSinFecha() {
         vehiculo.setFechaMatriculacion(null);
 
-        assertEquals(0, vehiculo.getAñosUso(), "Los años de uso deberían ser 0 cuando no hay fecha");
+        assertEquals(0, vehiculo.getAniosUso(), "Los años de uso deberían ser 0 cuando no hay fecha");
     }
 
     @ParameterizedTest
@@ -120,7 +120,7 @@ class VehiculoTest {
         vehiculo.setFechaMatriculacion(fecha);
 
         assertFalse(vehiculo.debeSerDadoDeBaja(), "Vehículo con " + anios + " años no debería darse de baja");
-        assertEquals(anios, vehiculo.getAñosUso(), "Los años de uso deberían calcularse correctamente");
+        assertEquals(anios, vehiculo.getAniosUso(), "Los años de uso deberían calcularse correctamente");
     }
 
     @ParameterizedTest
@@ -131,7 +131,7 @@ class VehiculoTest {
         vehiculo.setFechaMatriculacion(fecha);
 
         assertTrue(vehiculo.debeSerDadoDeBaja(), "Vehículo con " + anios + " años debería darse de baja");
-        assertEquals(anios, vehiculo.getAñosUso(), "Los años de uso deberían calcularse correctamente");
+        assertEquals(anios, vehiculo.getAniosUso(), "Los años de uso deberían calcularse correctamente");
     }
 
     @ParameterizedTest
@@ -166,7 +166,7 @@ class VehiculoTest {
     @DisplayName("toString genera formato correcto")
     void testToString() {
         vehiculo.setMatricula("9999ZZZ");
-        vehiculo.setTipo(TipoVehiculo.PEQUEÑO);
+        vehiculo.setTipo(TipoVehiculo.PEQUENO);
         vehiculo.setFechaMatriculacion(LocalDate.now().minusYears(3));
 
         String resultado = vehiculo.toString();
@@ -200,8 +200,8 @@ class VehiculoTest {
         vehiculo.setMatricula("TEST123");
         vehiculo.setFechaMatriculacion(LocalDate.now().minusYears(2));
 
-        vehiculo.setTipo(TipoVehiculo.PEQUEÑO);
-        String pequeño = vehiculo.toString();
+        vehiculo.setTipo(TipoVehiculo.PEQUENO);
+        String pequeno = vehiculo.toString();
 
         vehiculo.setTipo(TipoVehiculo.MEDIANO);
         String mediano = vehiculo.toString();
@@ -209,8 +209,8 @@ class VehiculoTest {
         vehiculo.setTipo(TipoVehiculo.GRANDE);
         String grande = vehiculo.toString();
 
-        assertNotEquals(pequeño, mediano, "Los toString de diferentes tipos deberían ser diferentes");
+        assertNotEquals(pequeno, mediano, "Los toString de diferentes tipos deberían ser diferentes");
         assertNotEquals(mediano, grande, "Los toString de diferentes tipos deberían ser diferentes");
-        assertNotEquals(pequeño, grande, "Los toString de diferentes tipos deberían ser diferentes");
+        assertNotEquals(pequeno, grande, "Los toString de diferentes tipos deberían ser diferentes");
     }
 }

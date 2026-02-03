@@ -103,12 +103,12 @@ class Vehiculodaotest {
 
     @Test
     @DisplayName("Obtener vehículos por tipo PEQUEÑO")
-    void testObtenerPorTipoPequeño() {
-        List<Vehiculo> vehiculos = vehiculoDAO.obtenerPorTipo(TipoVehiculo.PEQUEÑO);
+    void testObtenerPorTipoPequeno() {
+        List<Vehiculo> vehiculos = vehiculoDAO.obtenerPorTipo(TipoVehiculo.PEQUENO);
 
         assertNotNull(vehiculos, "La lista no debería ser null");
         for (Vehiculo vehiculo : vehiculos) {
-            assertEquals(TipoVehiculo.PEQUEÑO, vehiculo.getTipo(),
+            assertEquals(TipoVehiculo.PEQUENO, vehiculo.getTipo(),
                     "Todos los vehículos deberían ser de tipo PEQUEÑO");
             assertTrue(vehiculo.isActivo(), "Todos los vehículos deberían estar activos");
         }
@@ -172,7 +172,7 @@ class Vehiculodaotest {
         Vehiculo vehiculoSinId = new Vehiculo(
                 "TEST999",
                 "POL-999",
-                TipoVehiculo.PEQUEÑO,
+                TipoVehiculo.PEQUENO,
                 LocalDate.now()
         );
 
@@ -276,13 +276,13 @@ class Vehiculodaotest {
 
     @Test
     @DisplayName("Verificar años de uso de vehículos")
-    void testAñosUsoVehiculos() {
+    void testAniosUsoVehiculos() {
         List<Vehiculo> vehiculos = vehiculoDAO.obtenerActivos();
 
         for (Vehiculo vehiculo : vehiculos) {
             if (vehiculo.getFechaMatriculacion() != null) {
                 assertTrue(
-                        vehiculo.getAñosUso() >= 0,
+                        vehiculo.getAniosUso() >= 0,
                         "Los años de uso deberían ser un valor positivo"
                 );
             }
@@ -294,9 +294,9 @@ class Vehiculodaotest {
     void testActualizarTipoVehiculo() {
         if (vehiculoPrueba != null && vehiculoPrueba.getId() != null) {
             TipoVehiculo tipoOriginal = vehiculoPrueba.getTipo();
-            TipoVehiculo nuevoTipo = tipoOriginal == TipoVehiculo.PEQUEÑO
+            TipoVehiculo nuevoTipo = tipoOriginal == TipoVehiculo.PEQUENO
                     ? TipoVehiculo.GRANDE
-                    : TipoVehiculo.PEQUEÑO;
+                    : TipoVehiculo.PEQUENO;
 
             vehiculoPrueba.setTipo(nuevoTipo);
             boolean resultado = vehiculoDAO.actualizar(vehiculoPrueba);

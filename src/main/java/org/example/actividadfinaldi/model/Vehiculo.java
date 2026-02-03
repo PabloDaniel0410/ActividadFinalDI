@@ -39,7 +39,7 @@ public class Vehiculo {
      * Calcula los años de uso del vehiculo
      * @return años desde matriculacion
      */
-    public int getAñosUso() {
+    public int getAniosUso() {
         if (fechaMatriculacion == null) return 0;
         return Period.between(fechaMatriculacion, LocalDate.now()).getYears();
     }
@@ -95,6 +95,6 @@ public class Vehiculo {
 
     @Override
     public String toString() {
-        return matricula + " - " + tipo + " (" + getAñosUso() + " años)";
+        return matricula + " - " + tipo + " (" + getAniosUso() + " años)";
     }
 }
