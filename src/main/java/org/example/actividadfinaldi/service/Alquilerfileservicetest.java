@@ -21,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @DisplayName("Tests de AlquilerFileService")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class AlquilerFileServiceTest {
+class Alquilerfileservicetest {
 
     private AlquilerFileService fileService;
     private static final String ARCHIVO_TEST = "alquileres.txt";

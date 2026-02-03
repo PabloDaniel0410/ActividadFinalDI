@@ -3,6 +3,8 @@ module org.example.actividadfinaldi {
     requires javafx.fxml;
     requires java.net.http;
     requires org.json;
+    requires org.junit.jupiter.api;
+    requires org.junit.jupiter.params;
 
     opens org.example.actividadfinaldi to javafx.fxml;
     opens org.example.actividadfinaldi.controller to javafx.fxml;
