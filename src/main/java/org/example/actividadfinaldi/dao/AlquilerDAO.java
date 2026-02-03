@@ -103,7 +103,7 @@ public class AlquilerDAO {
             int clienteId = json.getInt("cliente_id");
             int vehiculoId = json.getInt("vehiculo_id");
 
-            // Obtener cliente y vehículo
+            // Obtiene el  cliente y vehículo
             Cliente cliente = obtenerClientePorId(clienteId);
             Vehiculo vehiculo = obtenerVehiculoPorId(vehiculoId);
 

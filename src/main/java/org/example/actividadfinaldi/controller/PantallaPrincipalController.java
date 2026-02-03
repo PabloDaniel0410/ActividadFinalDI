@@ -21,62 +21,53 @@ import java.time.LocalDate;
  */
 public class PantallaPrincipalController {
 
-    // ========== CAMPOS DEL FORMULARIO DE CLIENTE ==========
     @FXML private TextField txtNombre;
     @FXML private TextField txtApellidos;
     @FXML private TextField txtDni;
     @FXML private DatePicker dpFechaNacimiento;
     @FXML private Button btnRegistrarCliente;
 
-    // ========== CAMPOS DEL FORMULARIO DE VEHICULO ==========
     @FXML private TextField txtMatricula;
     @FXML private TextField txtPoliza;
     @FXML private ComboBox<TipoVehiculo> cmbTipoVehiculo;
     @FXML private DatePicker dpFechaMatriculacion;
     @FXML private Button btnRegistrarVehiculo;
 
-    // ========== TABLA DE CLIENTES (TAB CLIENTES) ==========
     @FXML private TableView<Cliente> tableClientesTab;
     @FXML private TableColumn<Cliente, String> colNombreClienteTab;
     @FXML private TableColumn<Cliente, String> colApellidosClienteTab;
     @FXML private TableColumn<Cliente, String> colDniClienteTab;
     @FXML private TableColumn<Cliente, Integer> colEdadClienteTab;
 
-    // ========== TABLA DE VEHICULOS (TAB VEHICULOS) ==========
     @FXML private TableView<Vehiculo> tableVehiculosTab;
     @FXML private TableColumn<Vehiculo, String> colMatriculaTab;
     @FXML private TableColumn<Vehiculo, String> colPolizaTab;
     @FXML private TableColumn<Vehiculo, TipoVehiculo> colTipoTab;
     @FXML private TableColumn<Vehiculo, Integer> colAñosUsoTab;
 
-    // ========== TABLA DE CLIENTES (TAB ALQUILAR) ==========
     @FXML private TableView<Cliente> tableClientes;
     @FXML private TableColumn<Cliente, String> colNombreCliente;
     @FXML private TableColumn<Cliente, String> colApellidosCliente;
     @FXML private TableColumn<Cliente, String> colDniCliente;
     @FXML private TableColumn<Cliente, Integer> colEdadCliente;
 
-    // ========== TABLA DE VEHICULOS (TAB ALQUILAR) ==========
     @FXML private TableView<Vehiculo> tableVehiculos;
     @FXML private TableColumn<Vehiculo, String> colMatricula;
     @FXML private TableColumn<Vehiculo, String> colPoliza;
     @FXML private TableColumn<Vehiculo, TipoVehiculo> colTipo;
     @FXML private TableColumn<Vehiculo, Integer> colAñosUso;
 
-    // ========== CAMPOS DE ALQUILER ==========
     @FXML private ComboBox<TipoVehiculo> cmbFiltroTipo;
     @FXML private DatePicker dpFechaInicio;
     @FXML private DatePicker dpFechaFin;
     @FXML private Button btnAlquilar;
     @FXML private TextArea txtAreaAlquileres;
 
-    // ========== DAOs Y SERVICIOS ==========
     private final ClienteDAO clienteDAO = new ClienteDAO();
     private final VehiculoDAO vehiculoDAO = new VehiculoDAO();
     private final AlquilerDAO alquilerDAO = new AlquilerDAO();
     private final AlquilerFileService fileService = new AlquilerFileService();
 
-    // ========== LISTAS OBSERVABLES ==========
     private ObservableList<Cliente> clientesData = FXCollections.observableArrayList();
     private ObservableList<Vehiculo> vehiculosData = FXCollections.observableArrayList();
     private ObservableList<Vehiculo> vehiculosDataTab = FXCollections.observableArrayList();
@@ -95,7 +86,7 @@ public class PantallaPrincipalController {
         configurarListeners();
     }
 
-    // ========== CONFIGURACIÓN TABLA CLIENTES (TAB CLIENTES) ==========
+
     private void configurarTablaClientesTab() {
         colNombreClienteTab.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colApellidosClienteTab.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
@@ -106,7 +97,6 @@ public class PantallaPrincipalController {
         tableClientesTab.setItems(clientesData);
     }
 
-    // ========== CONFIGURACIÓN TABLA VEHICULOS (TAB VEHICULOS) ==========
     private void configurarTablaVehiculosTab() {
         colMatriculaTab.setCellValueFactory(new PropertyValueFactory<>("matricula"));
         colPolizaTab.setCellValueFactory(new PropertyValueFactory<>("polizaSeguro"));
@@ -117,7 +107,6 @@ public class PantallaPrincipalController {
         tableVehiculosTab.setItems(vehiculosDataTab);
     }
 
-    // ========== CONFIGURACIÓN TABLA CLIENTES (TAB ALQUILAR) ==========
     private void configurarTablaClientes() {
         colNombreCliente.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         colApellidosCliente.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
@@ -128,7 +117,6 @@ public class PantallaPrincipalController {
         tableClientes.setItems(clientesData);
     }
 
-    // ========== CONFIGURACIÓN TABLA VEHICULOS (TAB ALQUILAR) ==========
     private void configurarTablaVehiculos() {
         colMatricula.setCellValueFactory(new PropertyValueFactory<>("matricula"));
         colPoliza.setCellValueFactory(new PropertyValueFactory<>("polizaSeguro"));
