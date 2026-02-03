@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 @DisplayName("Tests de AlquilerDAO")
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class AlquilerDAOTest {
+class Alquilerdaotest {
 
     private AlquilerDAO alquilerDAO;
     private ClienteDAO clienteDAO;
